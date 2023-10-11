@@ -17,6 +17,8 @@ public class User {
     private String email;
     @Column(name = "age")
     private Integer age;
+    @Column(name = "address")
+    private String address;
 
 
     public User() {
@@ -60,5 +62,13 @@ public class User {
 
     public Integer getAge() {
         return age;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
     }
 }

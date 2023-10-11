@@ -1,26 +1,32 @@
 package com.dev.bank.services;
 
+import com.dev.bank.dao.UserDao;
 import com.dev.bank.models.UserDto;
+import com.dev.bank.models.dao.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
+    @Autowired
+    private UserDao userDao;
+
     public UserService() {
     }
 
-    public UserDto createTestUser() {
-        UserDto user = new UserDto();
-        user.setId(1);
-        user.setFirstName("John");
-        user.setLastName("Backer");
-        user.setEmail("jbacker@gmail.com");
+    public UserDto createUser(UserDto userDto) {
+        User repositoryUser = new User();
+        repositoryUser.setFirstName(userDto.getFirstName());
+        repositoryUser.setLastName(userDto.getLastName());
+        repositoryUser.setEmail(userDto.getEmail());
+        repositoryUser.setAge(userDto.getAge());
 
-        return user;
-    }
+        Integer createdUserId = userDao.save(repositoryUser);
 
-    public UserDto addUserFromRest(UserDto userDto) {
-        userDto.setEmail("abc@gmail.com");
-        return userDto;
+        UserDto response = new UserDto();
+        response.setId(createdUserId);
+
+        return response;
     }
 }

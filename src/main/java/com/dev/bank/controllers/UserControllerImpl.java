@@ -16,17 +16,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public String helloUser() {
-        return "Hello user!";
-    }
-
-    @Override
-    public UserDto getTestUser() {
-        return userService.createTestUser();
-    }
-
-    @Override
     public UserDto createUser(UserDto user) {
-        return userService.addUserFromRest(user);
+        return userService.createUser(user);
     }
 }
