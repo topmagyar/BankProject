@@ -15,6 +15,8 @@ public class User {
     private String lastName;
     @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "password", nullable = false)
+    private String password;
     @Column(name = "age")
     private Integer age;
     @Column(name = "address")
@@ -70,5 +72,13 @@ public class User {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
