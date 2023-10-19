@@ -40,8 +40,32 @@ public class AuthenticationService {
             return response;
         }
 
-        //TODO finish login process
+        User user = userDao.findByEmail(email);
+        if (user == null) {
+            AuthLoginResponse response = new AuthLoginResponse();
 
+            response.setSuccess(false);
+            response.setMessage("User with email '" + email + "' doesn't exist in system");
+
+            return response;
+        }
+
+        String expectedPassword = user.getPassword();
+        if (!expectedPassword.equals(password)) {
+            AuthLoginResponse response = new AuthLoginResponse();
+
+            response.setSuccess(false);
+            response.setMessage("Password is incorrect");
+
+            return response;
+        }
+
+        AuthLoginResponse response = new AuthLoginResponse();
+
+        response.setSuccess(true);
+        response.setUserId(user.getId());
+
+        return response;
     }
 
     public AuthRegisterResponse register(AuthRegisterRequest request) {

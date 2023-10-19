@@ -1,8 +1,11 @@
 package com.dev.bank.models.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class BaseResponse {
 
     private Boolean success;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
 
     public void setSuccess(Boolean success) {

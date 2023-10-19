@@ -14,8 +14,20 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Integer save(User newUser) {
-        User createdUser = repository.save(newUser);
+        User createdUser = null;
+
+        try {
+            createdUser = repository.save(newUser);
+        } catch (Exception e) {
+            System.out.println("We got exception: " + e.getMessage());
+            return 0;
+        }
 
         return createdUser.getId();
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email);
     }
 }
