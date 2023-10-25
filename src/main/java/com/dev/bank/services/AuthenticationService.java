@@ -7,6 +7,7 @@ import com.dev.bank.models.request.AuthRegisterRequest;
 import com.dev.bank.models.response.AuthLoginResponse;
 import com.dev.bank.models.response.AuthRegisterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Period;
@@ -17,6 +18,8 @@ public class AuthenticationService {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AuthLoginResponse login(AuthLoginRequest request) {
         String email = request.getEmail();
@@ -50,8 +53,8 @@ public class AuthenticationService {
             return response;
         }
 
-        String expectedPassword = user.getPassword();
-        if (!expectedPassword.equals(password)) {
+        String expectedHashedPassword = user.getPassword();
+        if (!passwordEncoder.matches(password, expectedHashedPassword)) {
             AuthLoginResponse response = new AuthLoginResponse();
 
             response.setSuccess(false);
@@ -79,9 +82,11 @@ public class AuthenticationService {
             return response;
         }
 
+        String hashedPassword = passwordEncoder.encode(request.getPassword());
+
         User newUser = new User();
         newUser.setEmail(request.getEmail());
-        newUser.setPassword(request.getPassword());
+        newUser.setPassword(hashedPassword);
         newUser.setFirstName(request.getFirstName());
         newUser.setLastName(request.getLastName());
         newUser.setAge(getAge(birthdayDate));

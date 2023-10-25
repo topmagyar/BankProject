@@ -2,6 +2,7 @@ package com.dev.bank.controllers;
 
 import com.dev.bank.controllers.client.UserController;
 import com.dev.bank.models.UserDto;
+import com.dev.bank.models.response.AllUsersResponse;
 import com.dev.bank.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public UserDto createUser(UserDto user) {
-        return userService.createUser(user);
+    public AllUsersResponse getAllUsers() {
+        return userService.getAllUsers();
     }
 }

@@ -1,10 +1,15 @@
 package com.dev.bank.services;
 
+import com.dev.bank.converter.DtoConverter;
 import com.dev.bank.dao.UserDao;
 import com.dev.bank.models.UserDto;
 import com.dev.bank.models.dao.User;
+import com.dev.bank.models.response.AllUsersResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -15,17 +20,18 @@ public class UserService {
     public UserService() {
     }
 
-    public UserDto createUser(UserDto userDto) {
-        User repositoryUser = new User();
-        repositoryUser.setFirstName(userDto.getFirstName());
-        repositoryUser.setLastName(userDto.getLastName());
-        repositoryUser.setEmail(userDto.getEmail());
-        repositoryUser.setAge(userDto.getAge());
+    public AllUsersResponse getAllUsers() {
+        AllUsersResponse response = new AllUsersResponse();
 
-        Integer createdUserId = userDao.save(repositoryUser);
+        List<User> users = userDao.findAllUsers();
+        List<UserDto> userDtoList = new ArrayList<>();
+        for (User user : users) {
+            UserDto dto = DtoConverter.toDto(user);
+            userDtoList.add(dto);
+        }
 
-        UserDto response = new UserDto();
-        response.setId(createdUserId);
+        response.setSuccess(true);
+        response.setUsers(userDtoList);
 
         return response;
     }
