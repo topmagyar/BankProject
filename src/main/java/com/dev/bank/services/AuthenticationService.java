@@ -67,6 +67,8 @@ public class AuthenticationService {
 
         response.setSuccess(true);
         response.setUserId(user.getId());
+        //TODO add token implementation
+        response.setToken();
 
         return response;
     }
@@ -105,6 +107,8 @@ public class AuthenticationService {
 
         response.setSuccess(true);
         response.setUserId(newUserId);
+        //TODO add token implementation
+        response.setToken();
 
         return response;
     }
