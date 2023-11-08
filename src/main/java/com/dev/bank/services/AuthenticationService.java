@@ -20,6 +20,8 @@ public class AuthenticationService {
     private UserDao userDao;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private TokenService tokenService;
 
     public AuthLoginResponse login(AuthLoginRequest request) {
         String email = request.getEmail();
@@ -67,8 +69,7 @@ public class AuthenticationService {
 
         response.setSuccess(true);
         response.setUserId(user.getId());
-        //TODO add token implementation
-        response.setToken();
+        response.setToken(tokenService.generateToken(user.getId()));
 
         return response;
     }
@@ -107,8 +108,7 @@ public class AuthenticationService {
 
         response.setSuccess(true);
         response.setUserId(newUserId);
-        //TODO add token implementation
-        response.setToken();
+        response.setToken(tokenService.generateToken(newUserId));
 
         return response;
     }
