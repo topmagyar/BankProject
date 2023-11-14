@@ -1,6 +1,7 @@
 package com.dev.bank.models.dao;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -21,6 +22,9 @@ public class User {
     private Integer age;
     @Column(name = "address")
     private String address;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "userId")
+    private List<Account> accounts;
 
 
     public User() {
@@ -80,5 +84,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }

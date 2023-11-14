@@ -5,7 +5,8 @@ import com.dev.bank.models.dao.User;
 import java.util.List;
 
 public interface UserDao {
-    public Integer save(User newUser);
-    public User findByEmail(String email);
-    public List<User> findAllUsers();
+    Integer save(User newUser);
+    User findByEmail(String email);
+    List<User> findAllUsers();
+    User findById(Integer userId);
 }
