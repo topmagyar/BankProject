@@ -1,5 +1,7 @@
 package com.dev.bank.models.dao;
 
+import com.dev.bank.util.AccountType;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,10 @@ public class Account {
 
     @Column(name = "number")
     private String number;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private AccountType type;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinColumn(name = "userId")
@@ -53,5 +59,13 @@ public class Account {
 
     public String getNumber() {
         return number;
+    }
+
+    public void setType(AccountType type) {
+        this.type = type;
+    }
+
+    public AccountType getType() {
+        return type;
     }
 }
